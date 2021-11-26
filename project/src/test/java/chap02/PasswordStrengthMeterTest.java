@@ -5,29 +5,27 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PasswordStrengthMeterTest {
+    private final PasswordStrengthMeter meter = new PasswordStrengthMeter();
+
+    private void assertStrength(String password, PasswordStrength expectResult) {
+        PasswordStrength result = meter.meter(password);
+        assertEquals(result, expectResult);
+    }
+
     @Test
     void 모든_규칙을_충족하는_경우() {
-        PasswordStrengthMeter meter = new PasswordStrengthMeter();
-        PasswordStrength result = meter.meter("abc12!@AB");
-        assertEquals(PasswordStrength.STRONG, result);
-
-        PasswordStrength result2 = meter.meter("abc1!@Add");
-        assertEquals(PasswordStrength.STRONG, result2);
+        assertStrength("abc12!@AB", PasswordStrength.STRONG);
+        assertStrength("abc1!@Add", PasswordStrength.STRONG);
     }
 
     @Test
     void 길이만_8글자_미만이고_나머지_조건은_충족하는_경우() {
-        PasswordStrengthMeter meter = new PasswordStrengthMeter();
-        PasswordStrength result = meter.meter("ab12!@A");
-        assertEquals(PasswordStrength.NORMAL, result);
-        PasswordStrength result2 = meter.meter("Ab12!c");
-        assertEquals(PasswordStrength.NORMAL, result2);
+        assertStrength("ab12!@A", PasswordStrength.NORMAL);
+        assertStrength("Ab12!c", PasswordStrength.NORMAL);
     }
 
     @Test
     void 숫자를_포함하지_않고_나머지_조건은_충족하는_경우() {
-        PasswordStrengthMeter meter = new PasswordStrengthMeter();
-        PasswordStrength result = meter.meter("ab!@ABqwer");
-        assertEquals(PasswordStrength.NORMAL, result);
+        assertStrength("ab!@ABqwer", PasswordStrength.NORMAL);
     }
 }

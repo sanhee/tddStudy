@@ -48,4 +48,9 @@ public class PasswordStrengthMeterTest {
     void 길이가_8글자_이상인_조건만_충족하는_경우() {
         assertStrength("abcdefgh", PasswordStrength.WEAK);
     }
+
+    @Test
+    void 숫자_포함_조건만_충족하는_경우() {
+        assertStrength("1234", PasswordStrength.WEAK);
+    }
 }

@@ -53,4 +53,9 @@ public class PasswordStrengthMeterTest {
     void 숫자_포함_조건만_충족하는_경우() {
         assertStrength("1234", PasswordStrength.WEAK);
     }
+
+    @Test
+    void 대문자_포함_조건만_충족하는_경우() {
+        assertStrength("NOEUL", PasswordStrength.WEAK);
+    }
 }

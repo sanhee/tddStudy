@@ -17,7 +17,7 @@ public class PasswordStrengthMeter {
             meterCount++;
         }
 
-        if (meterCount == 1) {
+        if (meterCount <= 1) {
             return PasswordStrength.WEAK;
         }
         if (meterCount == 2) {

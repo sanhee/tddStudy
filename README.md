@@ -50,3 +50,40 @@ public class Main
 ```
 
 - https://howtodoinjava.com/java11/check-blank-string/
+
+
+
+
+
+### (내가 실수한 부분 노트) 앞서서 생각하지 말자
+
+
+
+다른 예외까지 처리하려고 하는데.. 지금 당장은 테스트케이스만 통과되도록 코드를 작성하자.
+
+고민했던 건 아래 코드인데,
+
+```java
+if(!lengthEnough){
+    return PasswordStrength.NORMAL;
+}
+```
+
+**!길이 and (!숫자 또는 !대문자) 일 경우 WEAK에 대한 예외가 안돼있어서 처리해줘야 하나? 였음**
+
+
+
+하지만, 당시 작성중이었던 테스트 코드는 `길이가 8글자 이상인 조건만 충족하는 경우` 였으므로, 
+
+위 예외는 생각할 필요가 없음.
+
+
+
+즉, 지금은 이 부분만 작성해주면 됨
+
+```java
+if(lengthEnough && !containNum && !containUppercase){
+	return PasswordStrength.WEAK;
+}
+```
+

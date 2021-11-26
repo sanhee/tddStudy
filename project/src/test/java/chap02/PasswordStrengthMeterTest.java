@@ -43,4 +43,9 @@ public class PasswordStrengthMeterTest {
     void 대문자를_포함하지_않고_나머지_조건을_충족하는_경우() {
         assertStrength("abcd12!@", PasswordStrength.NORMAL);
     }
+
+    @Test
+    void 길이가_8글자_이상인_조건만_충족하는_경우() {
+        assertStrength("abcdefgh", PasswordStrength.WEAK);
+    }
 }

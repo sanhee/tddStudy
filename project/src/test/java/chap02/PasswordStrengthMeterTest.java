@@ -38,4 +38,9 @@ public class PasswordStrengthMeterTest {
     void 빈_문자열인_경우() {
         assertStrength("", PasswordStrength.INVALID);
     }
+
+    @Test
+    void 대문자를_포함하지_않고_나머지_조건을_충족하는_경우() {
+        assertStrength("abcd12!@", PasswordStrength.NORMAL);
+    }
 }

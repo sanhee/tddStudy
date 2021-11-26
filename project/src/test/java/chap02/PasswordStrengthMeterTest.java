@@ -23,4 +23,11 @@ public class PasswordStrengthMeterTest {
         PasswordStrength result2 = meter.meter("Ab12!c");
         assertEquals(PasswordStrength.NORMAL, result2);
     }
+
+    @Test
+    void 숫자를_포함하지_않고_나머지_조건은_충족하는_경우() {
+        PasswordStrengthMeter meter = new PasswordStrengthMeter();
+        PasswordStrength result = meter.meter("ab!@ABqwer");
+        assertEquals(PasswordStrength.NORMAL, result);
+    }
 }

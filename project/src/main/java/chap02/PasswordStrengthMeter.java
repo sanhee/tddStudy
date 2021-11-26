@@ -6,7 +6,20 @@ public class PasswordStrengthMeter {
             return PasswordStrength.INVALID;
         }
 
-        int meterCount = 0; // 암호 조건 만족 개수
+        // 암호 조건 만족 개수
+        int meterCount = getMetCriteriaCounts(s);
+
+        if (meterCount <= 1) {
+            return PasswordStrength.WEAK;
+        }
+        if (meterCount == 2) {
+            return PasswordStrength.NORMAL;
+        }
+        return PasswordStrength.STRONG;
+    }
+
+    private int getMetCriteriaCounts(String s) {
+        int meterCount = 0;
         if (s.length() >= 8) {
             meterCount++;
         }
@@ -16,14 +29,7 @@ public class PasswordStrengthMeter {
         if (meetsContainingUppercaseCriteria(s)) {
             meterCount++;
         }
-
-        if (meterCount <= 1) {
-            return PasswordStrength.WEAK;
-        }
-        if (meterCount == 2) {
-            return PasswordStrength.NORMAL;
-        }
-        return PasswordStrength.STRONG;
+        return meterCount;
     }
 
     private boolean meetsContainingNumberCriteria(String s) {

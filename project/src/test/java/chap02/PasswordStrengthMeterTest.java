@@ -28,4 +28,14 @@ public class PasswordStrengthMeterTest {
     void 숫자를_포함하지_않고_나머지_조건은_충족하는_경우() {
         assertStrength("ab!@ABqwer", PasswordStrength.NORMAL);
     }
+
+    @Test
+    void 값이_없는_경우() {
+        assertStrength(null, PasswordStrength.INVALID);
+    }
+
+    @Test
+    void 빈_문자열인_경우() {
+        assertStrength("", PasswordStrength.INVALID);
+    }
 }

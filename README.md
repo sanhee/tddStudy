@@ -30,3 +30,23 @@
 - 즉, 테스트 메서드에서 발생하는 중복을 알맞게 제거하거나 의미가 잘 드러나게 코드를 수정할 필요가 있다.
 - 테스트 코드의 중복을 무턱대고 제거하면 안 된다. 중복을 제거한 뒤에도 **테스트 코드의 가독성이 떨어지지 않고 수정이 용이한 경우**에만 중복을 제거해야한다.
   - 중복을 제거한 뒤에 오히려 테스트 코드 관리가 어려워진다면 제거했던 중복을 되돌려야 한다.
+
+
+
+### isBlank() vs isEmpty()
+
+```java
+public class Main 
+{
+    public static void main(String[] args) 
+    {
+        System.out.println( "ABC".isBlank() );      //false
+        System.out.println( "  ".isBlank() );       //true
+ 
+        System.out.println( "ABC".isEmpty() );      //false
+        System.out.println( "  ".isEmpty() );       //false
+    }
+}
+```
+
+- https://howtodoinjava.com/java11/check-blank-string/

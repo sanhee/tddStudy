@@ -6,26 +6,21 @@ public class PasswordStrengthMeter {
             return PasswordStrength.INVALID;
         }
 
-        boolean lengthEnough = s.length() >= 8;
-        boolean containNum = meetsContainingNumberCriteria(s);
-        boolean containUppercase = meetsContainingUppercaseCriteria(s);
+        int meterCount = 0; // 암호 조건 만족 개수
+        if (s.length() >= 8) {
+            meterCount++;
+        }
+        if (meetsContainingNumberCriteria(s)) {
+            meterCount++;
+        }
+        if (meetsContainingUppercaseCriteria(s)) {
+            meterCount++;
+        }
 
-        if (lengthEnough && !containNum && !containUppercase) {
+        if (meterCount == 1) {
             return PasswordStrength.WEAK;
         }
-        if (containNum && !lengthEnough && !containUppercase) {
-            return PasswordStrength.WEAK;
-        }
-        if (containUppercase && !lengthEnough && !containNum) {
-            return PasswordStrength.WEAK;
-        }
-        if (!lengthEnough) {
-            return PasswordStrength.NORMAL;
-        }
-        if (!containNum) {
-            return PasswordStrength.NORMAL;
-        }
-        if (!containUppercase) {
+        if (meterCount == 2) {
             return PasswordStrength.NORMAL;
         }
         return PasswordStrength.STRONG;

@@ -11,7 +11,15 @@ public class ExpiryDateCalculatorTest {
     private static final ExpiryDateCalculator CAL = new ExpiryDateCalculator();
 
     private void assertExpiryDate(LocalDate billingDate, int payAmount, LocalDate expiryDate) {
-        LocalDate actualExpiryDate = CAL.calculateExpiryDate(billingDate, payAmount);
+        PayData payData = PayData.builder()
+                                 .billingDate(billingDate)
+                                 .payAmount(payAmount)
+                                 .build();
+        assertExpiryDate(payData, expiryDate);
+    }
+
+    private void assertExpiryDate(PayData payData, LocalDate expiryDate) {
+        LocalDate actualExpiryDate = CAL.calculateExpiryDate(payData);
         assertEquals(actualExpiryDate, expiryDate);
     }
 
@@ -37,4 +45,6 @@ public class ExpiryDateCalculatorTest {
                 LocalDate.of(2021, 5, 31), 1000,
                 LocalDate.of(2021, 6, 30));
     }
+
+
 }

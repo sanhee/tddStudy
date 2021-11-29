@@ -2,7 +2,7 @@ package chap02;
 
 public class PasswordStrengthMeter {
     public PasswordStrength meter(String s) {
-        if (s == null || s.isBlank()) {
+        if (s == null || s.isEmpty()) {
             return PasswordStrength.INVALID;
         }
 

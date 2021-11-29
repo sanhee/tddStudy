@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="chap02.CalculatorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-25T15:32:29" hostname="san-computer" time="0.018">
-  <properties/>
-  <testcase name="plus()" classname="chap02.CalculatorTest" time="0.018"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

@@ -5,18 +5,20 @@ import java.time.YearMonth;
 
 public class ExpiryDateCalculator {
     public LocalDate calculateExpiryDate(PayData payData) {
-
         int addedMonths = 0;
+        int feeOfYear = 100_000;
+        int feeOfMonth = 10_000;
 
-        if(payData.getPayAmount() >= 100_000){
-            int q = payData.getPayAmount() / 100_000;
-            int r = payData.getPayAmount() % 100_000;
-            addedMonths = (q * 12) + (r / 10_000);
-        }else{
-            addedMonths = payData.getPayAmount() / 10_000;
+        if (payData.getPayAmount() >= feeOfYear) {
+            int quotient = payData.getPayAmount() / feeOfYear;
+            int remain = payData.getPayAmount() % feeOfYear;
+            final int oneYear = 12;
+            addedMonths = (quotient * oneYear) + (remain / feeOfMonth);
+        } else {
+            addedMonths = payData.getPayAmount() / feeOfMonth;
         }
 
-        if(payData.getFirstBillingDate() != null){
+        if (payData.getFirstBillingDate() != null) {
             return expiryDateUsingFirstBillingDate(payData, addedMonths);
         }
         return payData.getBillingDate().plusMonths(addedMonths);
@@ -26,15 +28,15 @@ public class ExpiryDateCalculator {
         LocalDate candidateExp = payData.getBillingDate().plusMonths(addedMonths);
 
         final int dayOfFirstBilling = payData.getFirstBillingDate().getDayOfMonth();
-        if(isDifferentDayOfMonth(candidateExp, dayOfFirstBilling)){
+        if (isDifferentDayOfMonth(candidateExp, dayOfFirstBilling)) {
             // 후보 만료일이 포함된 달의 마지막 날 < 첫 납부일의 일자
             // 참이면, 후보 만료일을 그달의 마지막 날로 조정
             final int dayLenOfCandiMon = lastDayOfMonth(candidateExp);
-            if(dayLenOfCandiMon < dayOfFirstBilling){
+            if (dayLenOfCandiMon < dayOfFirstBilling) {
                 return candidateExp.withDayOfMonth(dayLenOfCandiMon);
             }
             return candidateExp.withDayOfMonth(dayOfFirstBilling);
-        }else{
+        } else {
             return candidateExp;
         }
     }

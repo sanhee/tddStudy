@@ -20,13 +20,13 @@ public class ExpiryDateCalculatorTest {
         assertExpiryDate(
                 PayData.builder()
                        .billingDate(LocalDate.of(2021, 11, 1))
-                       .payAmount(1000)
+                       .payAmount(10_000)
                        .build(),
                 LocalDate.of(2021, 12, 1));
         assertExpiryDate(
                 PayData.builder()
                        .billingDate(LocalDate.of(2021, 11, 5))
-                       .payAmount(1000)
+                       .payAmount(10_000)
                        .build(),
                 LocalDate.of(2021, 12, 5));
     }
@@ -36,19 +36,19 @@ public class ExpiryDateCalculatorTest {
         assertExpiryDate(
                 PayData.builder()
                        .billingDate(LocalDate.of(2021, 1, 31))
-                       .payAmount(1000)
+                       .payAmount(10_000)
                        .build(),
                 LocalDate.of(2021, 2, 28));
         assertExpiryDate(
                 PayData.builder()
                        .billingDate(LocalDate.of(2019, 1, 31))
-                       .payAmount(1000)
+                       .payAmount(10_000)
                        .build(),
                 LocalDate.of(2019, 2, 28));
         assertExpiryDate(
                 PayData.builder()
                        .billingDate(LocalDate.of(2021, 5, 31))
-                       .payAmount(1000)
+                       .payAmount(10_000)
                        .build(),
                 LocalDate.of(2021, 6, 30));
     }

@@ -113,4 +113,15 @@ public class ExpiryDateCalculatorTest {
                 LocalDate.of(2020,1,28)
         );
     }
+
+    @Test
+    void 윤달_마지막_날에_10만원을_납부(){
+        assertExpiryDate(
+                PayData.builder()
+                       .billingDate(LocalDate.of(2020,2,29))
+                       .payAmount(100_000)
+                       .build(),
+                LocalDate.of(2021,2,28)
+        );
+    }
 }

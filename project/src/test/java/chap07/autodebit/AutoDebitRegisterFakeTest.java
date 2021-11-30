@@ -21,13 +21,14 @@ public class AutoDebitRegisterFakeTest {
 
     @Test
     void 이미_등록된_유저일_경우_카드번호_변경(){
+        // 이미 자동이체 정보가 존재하는 경우  상황 흉내
         repository.save(new AutoDebitInfo("노을", "111222333444", LocalDateTime.now()));
 
         AutoDebitReq req = new AutoDebitReq("노을", "5588");
-
         // result를 사용하는 곳은 없지만, register() 내에서 save()를 이용하고 있음
         RegisterResult result = this.register.register(req);
 
+        // 대역을 통한 결과 검증
         AutoDebitInfo saved = repository.findOne(req.getUserId());
         assertEquals("5588", saved.getCardNumber());
     }

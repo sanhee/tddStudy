@@ -19,7 +19,7 @@ class AutoDebitRegisterStubTest {
 
     @Test
     void 유효하지_않은_카드번호(){
-        // 업체에서 받은 테스트용 유효하지 않은 카드번호라고 가정
+        // 유효하지 않은 카드 번호 상황 흉내
         stubValidator.setInvalidNo("12345678");
 
         AutoDebitReq req = new AutoDebitReq("noeul", "12345678");

@@ -5,7 +5,7 @@ public class AutoDebitReq {
     private String cardNumber;
     private String userId;
 
-    public AutoDebitReq(String cardNumber, String userId) {
+    public AutoDebitReq(String userId, String cardNumber) {
         this.cardNumber = cardNumber;
         this.userId = userId;
     }

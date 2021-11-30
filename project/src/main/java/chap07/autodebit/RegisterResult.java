@@ -8,7 +8,7 @@ public class RegisterResult {
     }
 
     public static RegisterResult error(CardValidity validity) {
-        return new RegisterResult(CardValidity.INVALID);
+        return new RegisterResult(validity);
     }
 
     public static RegisterResult success() {

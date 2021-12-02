@@ -1,6 +1,12 @@
 package etc.mockitoExample;
 
+import chap07.register.EmailNotifier;
+import chap07.register.MemoryUserRepository;
+import chap07.register.StubWeakPasswordChecker;
+import chap07.register.UserRegister;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.List;
 
@@ -11,6 +17,17 @@ import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.mock;
 
 public class GameGenMockTest {
+
+    private UserRegister userRegister;
+    private StubWeakPasswordChecker stubPasswordChecker = new StubWeakPasswordChecker();
+    private MemoryUserRepository fakeRepository = new MemoryUserRepository();
+    private EmailNotifier emailNotifier = mock(EmailNotifier.class);
+
+    @BeforeEach
+    void setUp(){
+        userRegister = new UserRegister(stubPasswordChecker, fakeRepository, emailNotifier);
+    }
+
     @Test
     void mock_메서드를_이용한_모의_객체_생성() {
         // 모의 객체 생성
@@ -93,4 +110,18 @@ public class GameGenMockTest {
                 .should(only())
                 .generate(any());
     }
+
+    @Test
+    void 가입하면_메일을_전송함(){
+        userRegister.register("id","pw","email");
+
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        then(emailNotifier)
+                .should()
+                .sendEmail(captor.capture());
+
+        String realEmail = captor.getValue();
+        assertEquals("email", realEmail);
+    }
+
 }

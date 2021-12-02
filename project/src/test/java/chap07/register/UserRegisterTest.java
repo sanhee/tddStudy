@@ -9,10 +9,11 @@ class UserRegisterTest {
     private UserRegister userRegister;
     private StubWeakPasswordChecker stubPasswordChecker = new StubWeakPasswordChecker();
     private MemoryUserRepository fakeRepository = new MemoryUserRepository();
+    private SpyEmailNotifier spyEmailNotifier = new SpyEmailNotifier();
 
     @BeforeEach
     void setUp(){
-        userRegister = new UserRegister(stubPasswordChecker, fakeRepository);
+        userRegister = new UserRegister(stubPasswordChecker, fakeRepository, spyEmailNotifier);
     }
 
     @Test
@@ -44,4 +45,16 @@ class UserRegisterTest {
                 ()-> assertEquals("68936@naver.com", savedUser.getEmail())
         );
     }
+
+    @Test
+    void 회원가입에_성공하면_이메일을_보냄(){
+
+        userRegister.register("산희","1234","68936@naver.com");
+
+        assertAll(
+                () -> assertTrue(spyEmailNotifier.isCalled()),
+                () -> assertEquals("68936@naver.com",spyEmailNotifier.getEmail())
+        );
+    }
+
 }

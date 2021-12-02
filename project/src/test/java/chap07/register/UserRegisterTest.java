@@ -3,15 +3,16 @@ package chap07.register;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class UserRegisterTest {
     private UserRegister userRegister;
     private StubWeakPasswordChecker stubPasswordChecker = new StubWeakPasswordChecker();
+    private MemoryUserRepository fakeRepository = new MemoryUserRepository();
 
     @BeforeEach
     void setUp(){
-        userRegister = new UserRegister(stubPasswordChecker);
+        userRegister = new UserRegister(stubPasswordChecker, fakeRepository);
     }
 
     @Test
@@ -22,5 +23,25 @@ class UserRegisterTest {
         assertThrows(WeakPasswordException.class, ()->{
             userRegister.register("id","pw","email");
         });
+    }
+
+    @Test
+    void 이미_같은_ID가_존재하면_가입_실패(){
+        fakeRepository.save(new User("id", "pw1", "email@email.com"));
+
+        assertThrows(DupIdException.class, () -> {
+           userRegister.register("id","pw2","email");
+        });
+    }
+
+    @Test
+    void 같은_ID가_없으면_가입_성공(){
+        userRegister.register("noeul","password","68936@naver.com");
+        User savedUser = fakeRepository.findById("noeul");
+
+        assertAll(
+                ()-> assertEquals("noeul", savedUser.getId()),
+                ()-> assertEquals("68936@naver.com", savedUser.getEmail())
+        );
     }
 }

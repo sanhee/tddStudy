@@ -7,8 +7,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.mock;
 
 public class GameGenMockTest {
@@ -71,5 +70,27 @@ public class GameGenMockTest {
                 ()-> assertEquals(expected, actual2),
                 ()-> assertEquals(expected, actual3)
         );
+    }
+
+    @Test
+    void 모의_객체의_메서드가_불렸는지_여부를_검증하는_코드(){
+        GameNumGen genMock = mock(GameNumGen.class);
+        Game game = new Game(genMock);
+        game.init(GameLevel.EASY);
+
+        then(genMock) // 메서드 호출 여부를 검증할 모의 객체 주입
+                .should()  // 반드시 실행되야 하는 메소드
+                //.generate(GameLevel.EASY);
+                .generate(any());
+    }
+
+    @Test
+    void 모의_객체가_한번만_호출된_경우(){
+        GameNumGen genMock = mock(GameNumGen.class);
+        genMock.generate(GameLevel.EASY);
+
+        then(genMock)
+                .should(only())
+                .generate(any());
     }
 }
